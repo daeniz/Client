@@ -32,11 +32,11 @@ public class Output {
             }
             else toBeSend+=","+users[i];
         }
-        pw.println(toBeSend);
+        pw.println(toBeSend+":"+msg);
     }
     
     public void login(String username){
-        
+        System.out.println("Logging in");
         pw.println("LOGIN:"+username);
     }
     

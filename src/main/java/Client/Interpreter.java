@@ -19,8 +19,8 @@ import java.util.logging.Logger;
  * @author Daniel
  */
 public class Interpreter extends Observable implements Runnable{
-    Socket socket;
-    Scanner s;
+    private Socket socket;
+    private Scanner s;
     
     public Interpreter(Socket socket){
         this.socket=socket;
@@ -34,7 +34,17 @@ public class Interpreter extends Observable implements Runnable{
     @Override
     public void run() {
         while (true){
-            s.nextLine();
+            String cmd=s.nextLine();
+            System.out.println(cmd);
+            if (cmd.split(":")[0].equals("msgRes")) {
+                System.out.println("Message incomming!");
+                postMSG(cmd.split(":"));
+            }
         }
+    }
+    
+    public void postMSG(String[] command){
+        String sender = command[1];
+        System.out.println(sender+" spews: "+ command[2]+" out of his ***");
     }
 }

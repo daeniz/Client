@@ -31,9 +31,8 @@ public class Client {
         Socket socket;
         try {
             socket = new Socket(host, port);
-            Interpreter i = new Interpreter(socket);
-            Thread it=new Thread(i);
-            it.start();
+            
+            ClientController cc = new ClientController(socket);
         } catch (IOException ex) {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
