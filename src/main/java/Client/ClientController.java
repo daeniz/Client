@@ -36,7 +36,9 @@ public class ClientController implements Observer {
         try {
             s = new Scanner(socket.getInputStream());
             pw = new PrintWriter(socket.getOutputStream(), true);
+            //Goes to Client class
             input = new Scanner(System.in);
+            
             o = new Output(pw);
         } catch (IOException ex) {
             Logger.getLogger(ClientController.class.getName()).log(Level.SEVERE, null, ex);

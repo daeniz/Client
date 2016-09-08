@@ -19,6 +19,8 @@ import java.util.logging.Logger;
  * @author Daniel
  */
 public class Client {
+    private static boolean clientRunning = true;
+    
     public static void main(String[] args) {
         
         String host;
@@ -32,8 +34,15 @@ public class Client {
         try {
             socket = new Socket(host, port);
             
+            
+            while(clientRunning){
+                System.out.println("d");
+                
+            }
             ClientController cc = new ClientController(socket);
             cc.runClient();
+            
+            
         } catch (IOException ex) {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
