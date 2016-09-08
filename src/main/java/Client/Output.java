@@ -35,6 +35,7 @@ public class Output {
                     toBeSend += "," + users[i];
                 }
             }
+            toBeSend += ":" + tempString[1];
         } else {
             toBeSend +=  ":" + msg;
         }
