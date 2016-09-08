@@ -60,12 +60,12 @@ public class ClientController {
 ////            String[] receivers = input.nextLine().split(",");
 //            sendMessage(msg);
 //        }
-        try {
-            it.join();
-        } catch (InterruptedException ex) {
-            Logger.getLogger(ClientController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        System.out.println("Exiting!");
+//        try {
+//            it.join();
+//        } catch (InterruptedException ex) {
+//            Logger.getLogger(ClientController.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+       // System.out.println("Exiting!");
     }
     
     public void login(String username){
