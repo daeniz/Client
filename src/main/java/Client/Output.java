@@ -25,6 +25,7 @@ public class Output {
     public void writeMessage(String msg, String[] users){
         String toBeSend="MSG:";
         boolean first=true;
+        
         for (int i = 0; i < users.length; i++) {
             if (first){
                 first=false;

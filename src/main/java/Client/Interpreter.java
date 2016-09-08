@@ -3,9 +3,11 @@ package Client;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Observable;
 import java.util.Scanner;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,11 +26,13 @@ public class Interpreter extends Observable implements Runnable{
     private Socket socket;
     private Scanner s;
     private AtomicBoolean loggedOut;
+    private List<String> clientList;
     
     public Interpreter(Socket socket){
         this.socket=socket;
         loggedOut=new AtomicBoolean();
         loggedOut.set(false);
+        clientList = new CopyOnWriteArrayList<>();
         try {
             s=new Scanner(socket.getInputStream());
         } catch (IOException ex) {
@@ -67,6 +71,6 @@ public class Interpreter extends Observable implements Runnable{
     }
 
     private void getClients(String[] split) {
-        //Insert code
+        System.out.println(split);
     }
 }

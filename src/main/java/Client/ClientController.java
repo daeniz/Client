@@ -3,6 +3,7 @@ package Client;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Scanner;
@@ -26,6 +27,7 @@ public class ClientController implements Observer {
     Output o;
     Interpreter i;
     Socket socket;
+    List<String> clientList;
 
     public ClientController(Socket socket) {
         this.socket = socket;
@@ -50,6 +52,7 @@ public class ClientController implements Observer {
             if (msg.equals("LOGOUT")) {
                 logout();
             }
+            
             System.out.println("Now tell us: who could ever benefit from hearing this shit?");
             String[] receivers = input.nextLine().split(",");
             o.writeMessage(msg, receivers);
