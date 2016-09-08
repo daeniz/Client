@@ -49,7 +49,7 @@ public class Interpreter extends Observable implements Runnable {
             try {
                 cmd = s.nextLine();
             } catch (NoSuchElementException ex) {
-                System.out.println("Socket vanished in front of our eyes!");
+                notifier("Logged out, close client!");
                 loggedOut.set(true);
             }
             if (cmd.split(":")[0].equals("MSGRES")) {
@@ -59,7 +59,7 @@ public class Interpreter extends Observable implements Runnable {
                 getClients(cmd.split(":"));
             }
         }
-        System.out.println("Exiting interpreter");
+        notifier("Exiting interpreter");
     }
 
     public void setLoggedOut() {
@@ -84,8 +84,8 @@ public class Interpreter extends Observable implements Runnable {
 
     }
 
-    private void notifier(Object obj) {
+    private void notifier(String msg) {
         this.setChanged();
-        notifyObservers(obj);
+        notifyObservers(msg);
     }
 }

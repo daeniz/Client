@@ -45,27 +45,7 @@ public class ClientController {
 
         Thread it = new Thread(i);
         it.start();
-        //  System.out.println("Ready to log in - please type your name");
-        // o.login(input.nextLine());  //Assumes user succesfully logs in on first try
-        //  String msg = "";
-//        while (!msg.equals("LOGOUT")) {
-//            System.out.println("Type your message!");
-//            //    msg = input.nextLine();
-//            if (msg.equals("LOGOUT")) {
-//                logout();
-//                break;
-//            }
-//
-////            System.out.println("Now tell us: who could ever benefit from hearing this shit?");
-////            String[] receivers = input.nextLine().split(",");
-//            sendMessage(msg);
-//        }
-//        try {
-//            it.join();
-//        } catch (InterruptedException ex) {
-//            Logger.getLogger(ClientController.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-       // System.out.println("Exiting!");
+        
     }
     
     public void login(String username){
@@ -73,6 +53,11 @@ public class ClientController {
     }
 
     public void sendMessage(String msg) {
+        if(msg.equals("LOGOUT")){
+            logout();
+            return;
+        }
+        
         pw.println(o.writeMessage(msg));
     }
     
