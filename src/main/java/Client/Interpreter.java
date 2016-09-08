@@ -49,7 +49,7 @@ public class Interpreter extends Observable implements Runnable {
             try {
                 cmd = s.nextLine();
             } catch (NoSuchElementException ex) {
-                notifier("Logged out, close client!");
+                notifier("You just lost your connection!");
                 loggedOut.set(true);
             }
             if (cmd.split(":")[0].equals("MSGRES")) {
@@ -59,6 +59,7 @@ public class Interpreter extends Observable implements Runnable {
                 getClients(cmd.split(":"));
             }
         }
+        notifier("Logged out, close client!");
         notifier("Exiting interpreter");
     }
 
@@ -67,8 +68,8 @@ public class Interpreter extends Observable implements Runnable {
     }
 
     public void postMSG(String[] command) {
-        Message msg = new Message(command[2],command[1]);
-        this.setChanged();      
+        Message msg = new Message(command[2], command[1]);
+        this.setChanged();
         notifyObservers(msg);
     }
 
@@ -78,7 +79,7 @@ public class Interpreter extends Observable implements Runnable {
             tmp = split[1].split(",");
             clientList = new CopyOnWriteArrayList<String>(Arrays.asList(tmp));
         }
-        ClientList lst = new ClientList(clientList); 
+        ClientList lst = new ClientList(clientList);
         this.setChanged();
         this.notifyObservers(lst);
 
