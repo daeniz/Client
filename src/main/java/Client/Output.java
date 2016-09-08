@@ -23,6 +23,7 @@ public class Output {
         String toBeSend = "MSG:";
         boolean first = true;
         String[] tempString = msg.split(":");
+        
         if (tempString.length > 1) {
             String[] users = tempString[0].split(",");
 
@@ -34,6 +35,8 @@ public class Output {
                     toBeSend += "," + users[i];
                 }
             }
+        } else {
+            toBeSend += msg;
         }
         System.out.println("Testing message: " + toBeSend);
         pw.println(toBeSend + ":" + msg);
