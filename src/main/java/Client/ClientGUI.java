@@ -132,7 +132,7 @@ public class ClientGUI extends javax.swing.JFrame implements Observer {
             }
         });
 
-        sendButton2.setText("Send message");
+        sendButton2.setText("LOGOUT");
         sendButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 sendButton2ActionPerformed(evt);
@@ -165,15 +165,12 @@ public class ClientGUI extends javax.swing.JFrame implements Observer {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
                     .addComponent(jScrollPane3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(sendButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(sendButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addComponent(message)))
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(message, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(sendButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(sendButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         pack();
@@ -190,6 +187,7 @@ public class ClientGUI extends javax.swing.JFrame implements Observer {
     private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendButtonActionPerformed
         // TODO add your handling code here:
         cc.sendMessage(message.getText());
+        message.setText("");
     }//GEN-LAST:event_sendButtonActionPerformed
 
     private void messageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_messageActionPerformed
@@ -279,19 +277,16 @@ public class ClientGUI extends javax.swing.JFrame implements Observer {
     @Override
     public void update(Observable o, Object arg) {
 
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                if (arg instanceof ClientList) {
-                    System.out.println("Got new ClientList:");
-                    ClientList list = (ClientList) arg;
-                    clients.setText(arg.toString());
-
-                } else if (arg instanceof Message) {
-                    chatArea.append(((Message) arg).toString() + "\n");
-                } else {
-                    chatArea.append((String)arg);
-                }
+        SwingUtilities.invokeLater(() -> {
+            if (arg instanceof ClientList) {
+                System.out.println("Got new ClientList:");
+                ClientList list = (ClientList) arg;
+                clients.setText(arg.toString());
+                
+            } else if (arg instanceof Message) {
+                chatArea.append(((Message) arg).toString() + "\n");
+            } else {
+                chatArea.append((String)arg);
             }
         });
 
