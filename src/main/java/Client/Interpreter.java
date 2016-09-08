@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Observable;
+import java.util.Observer;
 import java.util.Scanner;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -28,11 +29,12 @@ public class Interpreter extends Observable implements Runnable {
     private AtomicBoolean loggedOut;
     private List<String> clientList;
 
-    public Interpreter(Socket socket) {
+    public Interpreter(Socket socket, Observer obs) {
         this.socket = socket;
         loggedOut = new AtomicBoolean();
         loggedOut.set(false);
         clientList = new CopyOnWriteArrayList<>();
+        this.addObserver(obs);
         try {
             s = new Scanner(socket.getInputStream());
         } catch (IOException ex) {
@@ -66,6 +68,9 @@ public class Interpreter extends Observable implements Runnable {
 
     public void postMSG(String[] command) {
         String sender = command[1];
+        this.setChanged();
+
+        notifyObservers("Someone did something:" + command[1]);
         System.out.println(sender + " spews: " + command[2] + " out of his ***");
     }
 
@@ -79,5 +84,10 @@ public class Interpreter extends Observable implements Runnable {
             System.out.println(string);
         }
 
+    }
+
+    private void notifier(String msg) {
+        this.setChanged();
+        notifyObservers(msg);
     }
 }

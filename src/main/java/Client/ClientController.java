@@ -19,7 +19,7 @@ import java.util.logging.Logger;
  *
  * @author Daniel
  */
-public class ClientController implements Observer {
+public class ClientController {
 
     Scanner s;
     PrintWriter pw;
@@ -31,7 +31,7 @@ public class ClientController implements Observer {
     public ClientController(Observer obs, String host, int port) {
         try {
             socket = new Socket(host, port);
-            i = new Interpreter(socket);
+            i = new Interpreter(socket,obs);
             s = new Scanner(socket.getInputStream());
             pw = new PrintWriter(socket.getOutputStream(), true);
 
@@ -45,9 +45,9 @@ public class ClientController implements Observer {
 
         Thread it = new Thread(i);
         it.start();
-        System.out.println("Ready to log in - please type your name");
-        //o.login(input.nextLine());  //Assumes user succesfully logs in on first try
-        String msg = "";
+        //  System.out.println("Ready to log in - please type your name");
+        // o.login(input.nextLine());  //Assumes user succesfully logs in on first try
+        //  String msg = "";
 //        while (!msg.equals("LOGOUT")) {
 //            System.out.println("Type your message!");
 //            //    msg = input.nextLine();
@@ -82,9 +82,6 @@ public class ClientController implements Observer {
         }
     }
 
-    @Override
-    public void update(Observable o, Object arg) {
-
-    }
+    
 
 }
