@@ -37,24 +37,25 @@ public class Client implements Observer {
         } else {
             return;
         }
-        cc = new ClientController(client,host,port);
+        cc = new ClientController(client, host, port);
         cc.runClient();
         System.out.println("Type username to Log in");
         cc.login(input.nextLine());
         while (clientRunning) {
-            
+
             cc.sendMessage(input.nextLine());
-            
+
         }
 
     }
 
     @Override
     public void update(Observable o, Object arg) {
-        if(arg instanceof ClientList){
-            System.out.println("KJLHKJHKGJHSDLKGJDLKÆGJKLÆDJ");
+        if (arg instanceof ClientList) {
+            System.out.println("Got new ClientList:");
+            System.out.println(arg);
+
         }
-        System.out.println(arg);
-    
+
     }
 }

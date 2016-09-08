@@ -22,4 +22,16 @@ public class ClientList {
             return clientList;
         }
 
+    @Override
+    public String toString() {
+        String str = "";
+        for (String string : clientList) {
+            str += string + "\n";
+        }
+        
+       return str;
+    }
+        
+        
+
 }
