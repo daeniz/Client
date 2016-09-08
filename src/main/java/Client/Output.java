@@ -36,7 +36,7 @@ public class Output {
                 }
             }
         } else {
-            toBeSend += msg;
+            toBeSend +=  ":" + msg;
         }
         System.out.println("Testing message: " + toBeSend);
         pw.println(toBeSend + ":" + msg);
