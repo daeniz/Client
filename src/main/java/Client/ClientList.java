@@ -26,7 +26,8 @@ public class ClientList {
     public String toString() {
         String str = "";
         for (String string : clientList) {
-            str += string + "\n";
+            
+            if(string!=null) str += string + "\n";
         }
         
        return str;
