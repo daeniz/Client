@@ -12,6 +12,7 @@ import java.util.Observer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -43,8 +44,11 @@ public class ClientGUI extends javax.swing.JFrame implements Observer {
         chatArea = new javax.swing.JTextArea();
         jScrollPane3 = new javax.swing.JScrollPane();
         clients = new javax.swing.JTextArea();
+        sendButton = new javax.swing.JButton();
+        message = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -64,15 +68,34 @@ public class ClientGUI extends javax.swing.JFrame implements Observer {
         clients.setRows(5);
         jScrollPane3.setViewportView(clients);
 
+        sendButton.setText("Send message");
+        sendButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sendButtonActionPerformed(evt);
+            }
+        });
+
+        message.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                messageActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 459, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 459, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(message))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(sendButton, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addGap(10, 10, 10))
         );
         layout.setVerticalGroup(
@@ -82,7 +105,11 @@ public class ClientGUI extends javax.swing.JFrame implements Observer {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
                     .addComponent(jScrollPane3))
-                .addContainerGap(92, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(sendButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(message, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(49, Short.MAX_VALUE))
         );
 
         pack();
@@ -91,6 +118,15 @@ public class ClientGUI extends javax.swing.JFrame implements Observer {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowOpened
+
+    private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendButtonActionPerformed
+        // TODO add your handling code here:
+        cc.sendMessage(message.getText());
+    }//GEN-LAST:event_sendButtonActionPerformed
+
+    private void messageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_messageActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_messageActionPerformed
 
     /**
      * @param args the command line arguments
@@ -118,7 +154,7 @@ public class ClientGUI extends javax.swing.JFrame implements Observer {
             java.util.logging.Logger.getLogger(ClientGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-       client = new ClientGUI();
+        client = new ClientGUI();
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -126,7 +162,7 @@ public class ClientGUI extends javax.swing.JFrame implements Observer {
                 client.setVisible(true);
             }
         });
-        
+
         cc = new ClientController(client, "139.59.213.58", 9000);
         cc.runClient();
     }
@@ -136,21 +172,29 @@ public class ClientGUI extends javax.swing.JFrame implements Observer {
     private javax.swing.JTextArea clients;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTextField message;
+    private javax.swing.JButton sendButton;
     // End of variables declaration//GEN-END:variables
 
     @Override
     public void update(Observable o, Object arg) {
-         if (arg instanceof ClientList) {
-            System.out.println("Got new ClientList:");
-            ClientList list = (ClientList) arg;
-            this.clients.setText(arg.toString());
 
-        } else if (arg instanceof Message) {
-            this.chatArea.append(((Message) arg).toString()+"\n");
-        } else {
-            System.out.println(arg);
-        }
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                if (arg instanceof ClientList) {
+                    System.out.println("Got new ClientList:");
+                    ClientList list = (ClientList) arg;
+                    clients.setText(arg.toString());
+
+                } else if (arg instanceof Message) {
+                    chatArea.append(((Message) arg).toString() + "\n");
+                } else {
+                    System.out.println(arg);
+                }
+            }
+        });
+
     }
-
 
 }

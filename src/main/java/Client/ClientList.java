@@ -27,7 +27,7 @@ public class ClientList {
         String str = "";
         for (String string : clientList) {
             
-            if(!string.contentEquals(null)) str += string + "\n";
+            if(!string.contentEquals("null")) str += string + "\n";
         }
         
        return str;
