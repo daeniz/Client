@@ -33,6 +33,7 @@ public class Client {
             socket = new Socket(host, port);
             
             ClientController cc = new ClientController(socket);
+            cc.runClient();
         } catch (IOException ex) {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
