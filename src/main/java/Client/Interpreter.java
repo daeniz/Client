@@ -53,6 +53,7 @@ public class Interpreter extends Observable implements Runnable {
                 loggedOut.set(true);
             }
             if (cmd.split(":")[0].equals("MSGRES")) {
+                System.out.println("sdafdsafd");
                 postMSG(cmd.split(":"));
             }
             if (cmd.split(":")[0].equals("CLIENTLIST")) {
