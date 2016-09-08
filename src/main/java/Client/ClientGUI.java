@@ -290,7 +290,7 @@ public class ClientGUI extends javax.swing.JFrame implements Observer {
                 } else if (arg instanceof Message) {
                     chatArea.append(((Message) arg).toString() + "\n");
                 } else {
-                    System.out.println(arg);
+                    chatArea.append((String)arg);
                 }
             }
         });
