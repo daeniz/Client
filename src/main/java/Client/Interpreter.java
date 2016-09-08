@@ -74,7 +74,7 @@ public class Interpreter extends Observable implements Runnable{
     private void getClients(String[] split) {
         clientList = new CopyOnWriteArrayList<String>(Arrays.asList(split));
         for (String string : clientList) {
-            System.out.println("String");
+            System.out.println(string);
         }
     }
 }
