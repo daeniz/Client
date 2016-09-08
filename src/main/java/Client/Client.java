@@ -3,6 +3,8 @@ package Client;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,12 +18,15 @@ import java.util.logging.Logger;
  *
  * @author Daniel
  */
-public class Client {
+public class Client implements Observer {
 
     private static boolean clientRunning = true;
     private static Scanner input;
+    private static ClientController cc;
+    private static Client client;
 
     public static void main(String[] args) {
+        client = new Client();
         input = new Scanner(System.in);
 
         String host;
@@ -32,21 +37,18 @@ public class Client {
         } else {
             return;
         }
-        Socket socket;
-        try {
-            socket = new Socket(host, port);
-            ClientController cc = new ClientController(socket);
-
-            while (clientRunning) {
-                System.out.println("Test:");
-                cc.sendMessage(input.nextLine());
-
-            }
-            cc.runClient();
-
-        } catch (IOException ex) {
-            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        cc = new ClientController(client,host,port);
+        cc.runClient();
+        while (clientRunning) {
+            System.out.println("Test:");
+            cc.sendMessage(input.nextLine());
+            
         }
 
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

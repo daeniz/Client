@@ -28,15 +28,13 @@ public class ClientController implements Observer {
     Socket socket;
     List<String> clientList;
 
-    public ClientController(Socket socket) {
-        this.socket = socket;
-        i = new Interpreter(socket);
-
+    public ClientController(Observer obs, String host, int port) {
         try {
+            socket = new Socket(host, port);
+            i = new Interpreter(socket);
             s = new Scanner(socket.getInputStream());
             pw = new PrintWriter(socket.getOutputStream(), true);
-            //Goes to Client class
-            
+
             o = new Output(pw);
         } catch (IOException ex) {
             Logger.getLogger(ClientController.class.getName()).log(Level.SEVERE, null, ex);
@@ -52,7 +50,7 @@ public class ClientController implements Observer {
         String msg = "";
         while (!msg.equals("LOGOUT")) {
             System.out.println("Type your message!");
-        //    msg = input.nextLine();
+            //    msg = input.nextLine();
             if (msg.equals("LOGOUT")) {
                 logout();
                 break;

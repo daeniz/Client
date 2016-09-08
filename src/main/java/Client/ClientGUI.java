@@ -137,7 +137,7 @@ public class ClientGUI extends javax.swing.JFrame implements Observer {
         try {
             socket = new Socket(host, port);
 
-            ClientController cc = new ClientController(socket);
+           // ClientController cc = new ClientController(socket);
         } catch (IOException ex) {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
