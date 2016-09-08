@@ -3,6 +3,7 @@ package Client;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Observable;
@@ -71,6 +72,9 @@ public class Interpreter extends Observable implements Runnable{
     }
 
     private void getClients(String[] split) {
-        System.out.println(split);
+        clientList = new CopyOnWriteArrayList<String>(Arrays.asList(split));
+        for (String string : clientList) {
+            System.out.println("String");
+        }
     }
 }
