@@ -47,6 +47,7 @@ public class ClientController implements Observer{
         while (!msg.equals("LOGOUT")){
             System.out.println("Type the message the world needs to hear!");
            msg = input.nextLine();
+           if (msg.equals("LOGOUT")) o.logout();
             System.out.println("Now tell us: who could ever benefit from hearing this shit?");
            String[] receivers= input.nextLine().split(",");
            o.writeMessage(msg, receivers);

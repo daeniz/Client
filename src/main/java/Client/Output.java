@@ -39,6 +39,11 @@ public class Output {
         System.out.println("Logging in");
         pw.println("LOGIN:"+username);
     }
+
+    void logout() {
+        System.out.println("Logging out");
+        pw.println("LOGOUT:");
+    }
     
     
 }
