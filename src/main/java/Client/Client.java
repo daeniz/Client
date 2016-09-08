@@ -38,7 +38,7 @@ public class Client implements Observer {
             return;
         }
         cc = new ClientController(client,host,port);
-        //cc.runClient();
+        cc.runClient();
         System.out.println("Type username to Log in");
         cc.login(input.nextLine());
         while (clientRunning) {
@@ -51,6 +51,7 @@ public class Client implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
+        System.out.println("Something happened somewhere");
         System.out.println((String) arg);
     
     }
