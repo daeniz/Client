@@ -38,7 +38,8 @@ public class Client implements Observer {
             return;
         }
         cc = new ClientController(client,host,port);
-        cc.runClient();
+        //cc.runClient();
+        
         while (clientRunning) {
             
             cc.sendMessage(input.nextLine());

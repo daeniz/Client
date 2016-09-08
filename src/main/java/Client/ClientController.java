@@ -67,6 +67,10 @@ public class ClientController {
         }
         System.out.println("Exiting!");
     }
+    
+    public void login(String username){
+        pw.println("LOGIN:" + username);
+    }
 
     public void sendMessage(String msg) {
         pw.println(o.writeMessage(msg));
