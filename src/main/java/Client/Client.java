@@ -56,6 +56,10 @@ public class Client implements Observer {
             System.out.println(arg);
 
         }
+        if (arg instanceof Message){
+            
+            System.out.println(arg);
+        }
 
     }
 }

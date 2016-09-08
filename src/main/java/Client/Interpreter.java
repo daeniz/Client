@@ -67,8 +67,9 @@ public class Interpreter extends Observable implements Runnable {
     }
 
     public void postMSG(String[] command) {
+        Message msg = new Message(command[2],command[1]);
         this.setChanged();      
-        notifyObservers(command[1] + ":" + command[2]);
+        notifyObservers(msg);
     }
 
     private void getClients(String[] split) {
