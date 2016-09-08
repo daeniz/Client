@@ -41,7 +41,7 @@ public class Client implements Observer {
         cc.runClient();
         System.out.println("Type username to Log in");
         cc.login(input.nextLine());
-        while (clientRunning) {           
+        while (clientRunning) {
             cc.sendMessage(input.nextLine());
         }
 
@@ -53,9 +53,10 @@ public class Client implements Observer {
             System.out.println("Got new ClientList:");
             System.out.println(arg);
 
-        }
-        if (arg instanceof Message){
-            
+        } else if (arg instanceof Message) {
+
+            System.out.println(arg);
+        } else {
             System.out.println(arg);
         }
 

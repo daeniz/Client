@@ -49,7 +49,7 @@ public class Interpreter extends Observable implements Runnable {
             try {
                 cmd = s.nextLine();
             } catch (NoSuchElementException ex) {
-                notifier("You just lost your connection!");
+                notifier("Your connection is closed!");
                 loggedOut.set(true);
             }
             if (cmd.split(":")[0].equals("MSGRES")) {
@@ -59,6 +59,7 @@ public class Interpreter extends Observable implements Runnable {
                 getClients(cmd.split(":"));
             }
         }
+        System.out.println("TESTSTASEGAFS");
         notifier("Logged out, close client!");
     }
 
