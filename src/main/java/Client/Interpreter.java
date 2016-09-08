@@ -71,7 +71,7 @@ public class Interpreter extends Observable implements Runnable {
         String sender = command[1];
         this.setChanged();
 
-        notifyObservers("Someone did something:" + command[1]);
+        notifyObservers(command[1] + ":" + command[2]);
         //System.out.println(sender + " spews: " + command[2] + " out of his ***");
     }
 
