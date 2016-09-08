@@ -25,9 +25,12 @@ public class ClientController implements Observer{
     Scanner input;
     PrintWriter pw;
     Output o;
+    Interpreter i;
+    Socket socket;
 
     public ClientController(Socket socket) {
-        Interpreter i = new Interpreter(socket);
+        this.socket=socket;
+        i = new Interpreter(socket);
             Thread it=new Thread(i);
             it.start();
         try {
@@ -47,12 +50,28 @@ public class ClientController implements Observer{
         while (!msg.equals("LOGOUT")){
             System.out.println("Type the message the world needs to hear!");
            msg = input.nextLine();
-           if (msg.equals("LOGOUT")) o.logout();
+           if (msg.equals("LOGOUT")) logout();
             System.out.println("Now tell us: who could ever benefit from hearing this shit?");
            String[] receivers= input.nextLine().split(",");
            o.writeMessage(msg, receivers);
         }
+        try {
+            it.join();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(ClientController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        System.out.println("Exiting!");
         
+    }
+    
+    public void logout(){
+        o.logout();
+        i.setLoggedOut();
+        try {
+            socket.close();
+        } catch (IOException ex) {
+            Logger.getLogger(ClientController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
