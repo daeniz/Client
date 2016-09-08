@@ -41,6 +41,8 @@ public class ClientGUI extends javax.swing.JFrame implements Observer {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         chatArea = new javax.swing.JTextArea();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        clients = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -49,9 +51,18 @@ public class ClientGUI extends javax.swing.JFrame implements Observer {
             }
         });
 
+        chatArea.setEditable(false);
         chatArea.setColumns(20);
         chatArea.setRows(5);
+        chatArea.setAutoscrolls(false);
         jScrollPane1.setViewportView(chatArea);
+
+        jScrollPane3.setHorizontalScrollBar(null);
+
+        clients.setEditable(false);
+        clients.setColumns(20);
+        clients.setRows(5);
+        jScrollPane3.setViewportView(clients);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -60,14 +71,18 @@ public class ClientGUI extends javax.swing.JFrame implements Observer {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 459, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(136, 136, 136))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(96, Short.MAX_VALUE))
+                .addGap(10, 10, 10)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3))
+                .addContainerGap(92, Short.MAX_VALUE))
         );
 
         pack();
@@ -118,18 +133,20 @@ public class ClientGUI extends javax.swing.JFrame implements Observer {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea chatArea;
+    private javax.swing.JTextArea clients;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane3;
     // End of variables declaration//GEN-END:variables
 
     @Override
     public void update(Observable o, Object arg) {
          if (arg instanceof ClientList) {
             System.out.println("Got new ClientList:");
-            System.out.println(arg);
+            ClientList list = (ClientList) arg;
+            this.clients.setText(arg.toString());
 
         } else if (arg instanceof Message) {
-
-            System.out.println(arg);
+            this.chatArea.append(((Message) arg).toString()+"\n");
         } else {
             System.out.println(arg);
         }
