@@ -22,7 +22,6 @@ import java.util.logging.Logger;
 public class ClientController implements Observer {
 
     Scanner s;
-    Scanner input;
     PrintWriter pw;
     Output o;
     Interpreter i;
@@ -37,7 +36,6 @@ public class ClientController implements Observer {
             s = new Scanner(socket.getInputStream());
             pw = new PrintWriter(socket.getOutputStream(), true);
             //Goes to Client class
-            input = new Scanner(System.in);
             
             o = new Output(pw);
         } catch (IOException ex) {
@@ -50,11 +48,11 @@ public class ClientController implements Observer {
         Thread it = new Thread(i);
         it.start();
         System.out.println("Ready to log in - please type your name");
-        o.login(input.nextLine());  //Assumes user succesfully logs in on first try
+        //o.login(input.nextLine());  //Assumes user succesfully logs in on first try
         String msg = "";
         while (!msg.equals("LOGOUT")) {
             System.out.println("Type your message!");
-            msg = input.nextLine();
+        //    msg = input.nextLine();
             if (msg.equals("LOGOUT")) {
                 logout();
                 break;
