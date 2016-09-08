@@ -35,13 +35,13 @@ public class Client {
         Socket socket;
         try {
             socket = new Socket(host, port);
+            ClientController cc = new ClientController(socket);
 
             while (clientRunning) {
-                System.out.println("Test:"); 
-                input.nextLine();
+                System.out.println("Test:");
+                cc.sendMessage(input.nextLine());
 
             }
-            ClientController cc = new ClientController(socket);
             cc.runClient();
 
         } catch (IOException ex) {
