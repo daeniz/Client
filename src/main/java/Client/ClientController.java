@@ -1,6 +1,5 @@
 package Client;
 
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
@@ -19,7 +18,7 @@ import java.util.logging.Logger;
  *
  * @author Daniel
  */
-public class ClientController implements Observer{
+public class ClientController implements Observer {
 
     Scanner s;
     Scanner input;
@@ -28,40 +27,33 @@ public class ClientController implements Observer{
 
     public ClientController(Socket socket) {
         Interpreter i = new Interpreter(socket);
-            Thread it=new Thread(i);
-            it.start();
+        Thread it = new Thread(i);
+        it.start();
         try {
             s = new Scanner(socket.getInputStream());
-            pw = new PrintWriter(socket.getOutputStream(),true);
-            input=new Scanner(System.in);
-            o=new Output(pw);
+            pw = new PrintWriter(socket.getOutputStream(), true);
+            input = new Scanner(System.in);
+            o = new Output(pw);
         } catch (IOException ex) {
             Logger.getLogger(ClientController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
-        
+
         System.out.println("Ready to log in - please type your name");
         o.login(input.nextLine());  //Assumes user succesfully logs in on first try
-        String msg="";
-        while (!msg.equals("LOGOUT")){
+        String msg = "";
+        while (!msg.equals("LOGOUT")) {
             System.out.println("Type the message the world needs to hear!");
-           msg = input.nextLine();
+            msg = input.nextLine();
             System.out.println("Now tell us: who could ever benefit from hearing this shit?");
-           String[] receivers= input.nextLine().split(",");
-           o.writeMessage(msg, receivers);
+            String[] receivers = input.nextLine().split(",");
+            o.writeMessage(msg, receivers);
         }
-        
+
     }
 
     @Override
     public void update(Observable o, Object arg) {
-        
-    }
 
-    
-    
-    
-    
+    }
 
 }
