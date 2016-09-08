@@ -40,7 +40,7 @@ public class Client implements Observer {
         cc = new ClientController(client,host,port);
         cc.runClient();
         while (clientRunning) {
-            System.out.println("Test:");
+            
             cc.sendMessage(input.nextLine());
             
         }

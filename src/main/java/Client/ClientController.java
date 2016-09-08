@@ -48,18 +48,18 @@ public class ClientController implements Observer {
         System.out.println("Ready to log in - please type your name");
         //o.login(input.nextLine());  //Assumes user succesfully logs in on first try
         String msg = "";
-        while (!msg.equals("LOGOUT")) {
-            System.out.println("Type your message!");
-            //    msg = input.nextLine();
-            if (msg.equals("LOGOUT")) {
-                logout();
-                break;
-            }
-
-//            System.out.println("Now tell us: who could ever benefit from hearing this shit?");
-//            String[] receivers = input.nextLine().split(",");
-            sendMessage(msg);
-        }
+//        while (!msg.equals("LOGOUT")) {
+//            System.out.println("Type your message!");
+//            //    msg = input.nextLine();
+//            if (msg.equals("LOGOUT")) {
+//                logout();
+//                break;
+//            }
+//
+////            System.out.println("Now tell us: who could ever benefit from hearing this shit?");
+////            String[] receivers = input.nextLine().split(",");
+//            sendMessage(msg);
+//        }
         try {
             it.join();
         } catch (InterruptedException ex) {
