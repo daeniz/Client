@@ -48,12 +48,10 @@ public class Output {
     }
 
     public void login(String username) {
-        //System.out.println("Logging in");
         pw.println("LOGIN:" + username);
     }
 
-    void logout() {
-        //System.out.println("Logging out");
+    public void logout() {
         pw.println("LOGOUT:");
     }
 

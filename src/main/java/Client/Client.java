@@ -51,7 +51,8 @@ public class Client implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        System.out.println((String) arg);
+        
+        System.out.println(arg);
     
     }
 }

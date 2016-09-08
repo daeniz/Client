@@ -53,7 +53,6 @@ public class Interpreter extends Observable implements Runnable {
                 loggedOut.set(true);
             }
             if (cmd.split(":")[0].equals("MSGRES")) {
-                System.out.println("sdafdsafd");
                 postMSG(cmd.split(":"));
             }
             if (cmd.split(":")[0].equals("CLIENTLIST")) {
@@ -68,11 +67,8 @@ public class Interpreter extends Observable implements Runnable {
     }
 
     public void postMSG(String[] command) {
-        String sender = command[1];
-        this.setChanged();
-
+        this.setChanged();      
         notifyObservers(command[1] + ":" + command[2]);
-        //System.out.println(sender + " spews: " + command[2] + " out of his ***");
     }
 
     private void getClients(String[] split) {
@@ -81,14 +77,14 @@ public class Interpreter extends Observable implements Runnable {
             tmp = split[1].split(",");
             clientList = new CopyOnWriteArrayList<String>(Arrays.asList(tmp));
         }
-        for (String string : clientList) {
-            System.out.println(string);
-        }
+        ClientList lst = new ClientList(clientList); 
+        this.setChanged();
+        this.notifyObservers(lst);
 
     }
 
-    private void notifier(String msg) {
+    private void notifier(Object obj) {
         this.setChanged();
-        notifyObservers(msg);
+        notifyObservers(obj);
     }
 }

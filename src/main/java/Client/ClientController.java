@@ -75,6 +75,7 @@ public class ClientController {
     public void sendMessage(String msg) {
         pw.println(o.writeMessage(msg));
     }
+    
 
     public void logout() {
         o.logout();
