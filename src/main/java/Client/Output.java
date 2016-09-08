@@ -19,7 +19,12 @@ public class Output {
         this.pw = pw;
     }
 
-    public void writeMessage(String msg) {
+    /**
+     * The purpose of this method is to take a message string, and create the proper output
+     * for sending to the server
+     * @param msg String containing message plus persons sending to.
+     */
+    public String writeMessage(String msg) {
         String toBeSend = "MSG:";
         boolean first = true;
         String[] tempString = msg.split(":");
@@ -39,16 +44,16 @@ public class Output {
         } else {
             toBeSend +=  ":" + msg;
         }
-        pw.println(toBeSend);
+        return toBeSend;
     }
 
     public void login(String username) {
-        System.out.println("Logging in");
+        //System.out.println("Logging in");
         pw.println("LOGIN:" + username);
     }
 
     void logout() {
-        System.out.println("Logging out");
+        //System.out.println("Logging out");
         pw.println("LOGOUT:");
     }
 
