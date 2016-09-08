@@ -39,7 +39,8 @@ public class Client implements Observer {
         }
         cc = new ClientController(client,host,port);
         //cc.runClient();
-        
+        System.out.println("Type username to Log in");
+        cc.login(input.nextLine());
         while (clientRunning) {
             
             cc.sendMessage(input.nextLine());
