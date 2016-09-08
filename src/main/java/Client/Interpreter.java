@@ -36,7 +36,7 @@ public class Interpreter extends Observable implements Runnable{
         while (true){
             String cmd=s.nextLine();
             System.out.println(cmd);
-            if (cmd.split(":")[0].equals("msgRes")) {
+            if (cmd.split(":")[0].equals("MSGRES")) {
                 System.out.println("Message incomming!");
                 postMSG(cmd.split(":"));
             }
