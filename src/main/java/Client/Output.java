@@ -39,8 +39,7 @@ public class Output {
         } else {
             toBeSend +=  ":" + msg;
         }
-        System.out.println("Testing message: " + toBeSend);
-        //pw.println(toBeSend);
+        pw.println(toBeSend);
     }
 
     public void login(String username) {
