@@ -32,8 +32,7 @@ public class ClientController implements Observer {
     public ClientController(Socket socket) {
         this.socket = socket;
         i = new Interpreter(socket);
-        Thread it = new Thread(i);
-        it.start();
+            
         try {
             s = new Scanner(socket.getInputStream());
             pw = new PrintWriter(socket.getOutputStream(), true);
@@ -42,20 +41,28 @@ public class ClientController implements Observer {
         } catch (IOException ex) {
             Logger.getLogger(ClientController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+    }
+        
+        
+    public void runClient(){
+        
+        
+        Thread it=new Thread(i);
+            it.start();
         System.out.println("Ready to log in - please type your name");
         o.login(input.nextLine());  //Assumes user succesfully logs in on first try
         String msg = "";
         while (!msg.equals("LOGOUT")) {
-            System.out.println("Type the message the world needs to hear!");
-            msg = input.nextLine();
-            if (msg.equals("LOGOUT")) {
-                logout();
-            }
-            
-            System.out.println("Now tell us: who could ever benefit from hearing this shit?");
-            String[] receivers = input.nextLine().split(",");
-            o.writeMessage(msg, receivers);
+           System.out.println("Type your message!");
+           msg = input.nextLine();
+           if (msg.equals("LOGOUT")){
+               logout();
+               break;
+           }
+           
+//            System.out.println("Now tell us: who could ever benefit from hearing this shit?");
+//            String[] receivers = input.nextLine().split(",");
+            o.writeMessage(msg);
         }
         try {
             it.join();
@@ -63,7 +70,6 @@ public class ClientController implements Observer {
             Logger.getLogger(ClientController.class.getName()).log(Level.SEVERE, null, ex);
         }
         System.out.println("Exiting!");
-
     }
 
     public void logout() {
