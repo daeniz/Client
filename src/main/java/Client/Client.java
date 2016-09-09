@@ -29,9 +29,9 @@ public class Client implements Observer {
         client = new Client();
         input = new Scanner(System.in);
         
-        System.out.println("Enter 1. for comandline, and 2. for GUI");
-        int select = input.nextInt();
-        if(select == 2){
+        System.out.println("Enter 1. for commandline, and 2. for GUI");
+        String select = input.nextLine();
+       if(select.equals("2")){
             ClientGUI.main(args);
             return;
         }

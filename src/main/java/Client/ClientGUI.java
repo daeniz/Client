@@ -211,7 +211,8 @@ public class ClientGUI extends javax.swing.JFrame implements Observer {
             messageToSend += ":";
         }
         messageToSend += message.getText();
-        cc.sendMessage(messageToSend);
+        chatArea.setText(messageToSend);
+//cc.sendMessage(messageToSend);
         message.setText("");
     }//GEN-LAST:event_sendButtonActionPerformed
 

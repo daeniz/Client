@@ -44,6 +44,7 @@ public class Output {
         } else {
             toBeSend +=  ":" + msg;
         }
+        System.out.println(toBeSend);
         return toBeSend;
     }
 
