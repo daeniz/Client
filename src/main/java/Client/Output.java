@@ -29,7 +29,7 @@ public class Output {
         boolean first = true;
         String[] tempString = msg.split(":");
         
-        if (tempString.length > 1&&msg.contains(":")) {
+        if (tempString.length > 1) {
             String[] users = tempString[0].split(",");
 
             for (int i = 0; i < users.length; i++) {
