@@ -211,9 +211,9 @@ public class ClientGUI extends javax.swing.JFrame implements Observer {
             messageToSend += ":";
         }
         messageToSend += message.getText();
-        chatArea.setText(messageToSend);
-//cc.sendMessage(messageToSend);
+        cc.sendMessage(messageToSend);
         message.setText("");
+        clientsList.clearSelection();
     }//GEN-LAST:event_sendButtonActionPerformed
 
     private void messageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_messageActionPerformed
@@ -302,8 +302,16 @@ public class ClientGUI extends javax.swing.JFrame implements Observer {
                 client.setVisible(true);
             }
         });
+        String host;
+        int port;
+        if (args.length == 2) {
+            host = args[0];
+            port = Integer.parseInt(args[1]);
+        } else {
+            return;
+        }
 
-        cc = new ClientController(client, "139.59.213.58", 9000);
+        cc = new ClientController(client,host, port);
         cc.runClient();
 
     }

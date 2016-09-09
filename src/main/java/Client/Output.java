@@ -41,7 +41,7 @@ public class Output {
                 }
             }
             toBeSend += ":" + tempString[1];
-        } else {
+        } else if (!msg.contains(":")) {
             toBeSend +=  ":" + msg;
         }
         System.out.println(toBeSend);
