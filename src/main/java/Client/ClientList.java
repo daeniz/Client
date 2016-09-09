@@ -14,6 +14,16 @@ import java.util.List;
 public class ClientList {
         List<String> clientList;
         
+        
+        public String[] getClientArray(){
+            String[] returnString = new String[clientList.size()]; 
+            int i = 0;
+            for (String string : clientList) {
+                returnString[i] = string;
+                i++;
+            }
+            return returnString;
+        }
         public ClientList(List clientList){
             this.clientList = clientList;
         }

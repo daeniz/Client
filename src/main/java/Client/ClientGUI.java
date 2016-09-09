@@ -5,8 +5,10 @@
  */
 package Client;
 
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.logging.Level;
@@ -42,14 +44,14 @@ public class ClientGUI extends javax.swing.JFrame implements Observer {
 
         login = new javax.swing.JDialog();
         username = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        loginBut = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         chatArea = new javax.swing.JTextArea();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        clients = new javax.swing.JTextArea();
         sendButton = new javax.swing.JButton();
         message = new javax.swing.JTextField();
-        sendButton2 = new javax.swing.JButton();
+        logout = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        clientsList = new javax.swing.JList<>();
 
         login.setAlwaysOnTop(true);
         login.setMinimumSize(new java.awt.Dimension(200, 150));
@@ -67,10 +69,10 @@ public class ClientGUI extends javax.swing.JFrame implements Observer {
             }
         });
 
-        jButton1.setText("LOGIN");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        loginBut.setText("LOGIN");
+        loginBut.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                loginButActionPerformed(evt);
             }
         });
 
@@ -82,7 +84,7 @@ public class ClientGUI extends javax.swing.JFrame implements Observer {
                 .addContainerGap()
                 .addGroup(loginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(username)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE))
+                    .addComponent(loginBut, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE))
                 .addContainerGap(17, Short.MAX_VALUE))
         );
         loginLayout.setVerticalGroup(
@@ -91,7 +93,7 @@ public class ClientGUI extends javax.swing.JFrame implements Observer {
                 .addContainerGap()
                 .addComponent(username, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
+                .addComponent(loginBut)
                 .addContainerGap(12, Short.MAX_VALUE))
         );
 
@@ -112,13 +114,6 @@ public class ClientGUI extends javax.swing.JFrame implements Observer {
         chatArea.setAutoscrolls(false);
         jScrollPane1.setViewportView(chatArea);
 
-        jScrollPane3.setHorizontalScrollBar(null);
-
-        clients.setEditable(false);
-        clients.setColumns(20);
-        clients.setRows(5);
-        jScrollPane3.setViewportView(clients);
-
         sendButton.setText("Send message");
         sendButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -131,13 +126,30 @@ public class ClientGUI extends javax.swing.JFrame implements Observer {
                 messageActionPerformed(evt);
             }
         });
-
-        sendButton2.setText("LOGOUT");
-        sendButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                sendButton2ActionPerformed(evt);
+        message.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                messageKeyPressed(evt);
             }
         });
+
+        logout.setText("LOGOUT");
+        logout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logoutActionPerformed(evt);
+            }
+        });
+
+        clientsList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                clientsListMouseClicked(evt);
+            }
+        });
+        clientsList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                clientsListValueChanged(evt);
+            }
+        });
+        jScrollPane2.setViewportView(clientsList);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -151,11 +163,12 @@ public class ClientGUI extends javax.swing.JFrame implements Observer {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 459, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(message))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(sendButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(sendButton2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE))
-                .addGap(10, 10, 10))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(sendButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(logout, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -163,13 +176,13 @@ public class ClientGUI extends javax.swing.JFrame implements Observer {
                 .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
-                    .addComponent(jScrollPane3))
+                    .addComponent(jScrollPane2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(message, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(sendButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(sendButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(logout, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(15, Short.MAX_VALUE))
         );
 
@@ -186,20 +199,33 @@ public class ClientGUI extends javax.swing.JFrame implements Observer {
 
     private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendButtonActionPerformed
         // TODO add your handling code here:
-        cc.sendMessage(message.getText());
+        List<String> list;
+        list = clientsList.getSelectedValuesList();
+        String messageToSend = "";
+        if (list.size() > 0) {
+            for (String string : list) {
+                messageToSend += string + ",";
+            }
+            messageToSend = messageToSend.substring(0, messageToSend.length() - 1);
+
+            messageToSend += ":";
+        }
+        messageToSend += message.getText();
+        cc.sendMessage(messageToSend);
         message.setText("");
     }//GEN-LAST:event_sendButtonActionPerformed
 
     private void messageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_messageActionPerformed
         // TODO add your handling code here:
 
+
     }//GEN-LAST:event_messageActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void loginButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButActionPerformed
         // TODO add your handling code here:
         cc.login(username.getText());
         login.dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_loginButActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         // TODO add your handling code here:
@@ -213,13 +239,33 @@ public class ClientGUI extends javax.swing.JFrame implements Observer {
 
     private void usernameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_usernameKeyPressed
         // TODO add your handling code here:
-       
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            loginBut.doClick();
+        }
+
     }//GEN-LAST:event_usernameKeyPressed
 
-    private void sendButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendButton2ActionPerformed
+    private void logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutActionPerformed
         // TODO add your handling code here:
         cc.logout();
-    }//GEN-LAST:event_sendButton2ActionPerformed
+    }//GEN-LAST:event_logoutActionPerformed
+
+    private void messageKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_messageKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            sendButton.doClick();
+        }
+    }//GEN-LAST:event_messageKeyPressed
+
+    private void clientsListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_clientsListValueChanged
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_clientsListValueChanged
+
+    private void clientsListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clientsListMouseClicked
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_clientsListMouseClicked
 
     /**
      * @param args the command line arguments
@@ -263,14 +309,14 @@ public class ClientGUI extends javax.swing.JFrame implements Observer {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea chatArea;
-    private javax.swing.JTextArea clients;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JList<String> clientsList;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JDialog login;
+    private javax.swing.JButton loginBut;
+    private javax.swing.JButton logout;
     private javax.swing.JTextField message;
     private javax.swing.JButton sendButton;
-    private javax.swing.JButton sendButton2;
     private javax.swing.JTextField username;
     // End of variables declaration//GEN-END:variables
 
@@ -279,13 +325,14 @@ public class ClientGUI extends javax.swing.JFrame implements Observer {
 
         SwingUtilities.invokeLater(() -> {
             if (arg instanceof ClientList) {
-               // ClientList list = (ClientList) arg;
-                clients.setText(arg.toString());
-                
+                // ClientList list = (ClientList) arg;
+                clientsList.clearSelection();
+                clientsList.setListData(((ClientList) arg).getClientArray());
+
             } else if (arg instanceof Message) {
                 chatArea.append(((Message) arg).toString() + "\n");
             } else {
-                chatArea.append((String)arg + "\n");
+                chatArea.append((String) arg + "\n");
             }
         });
 
