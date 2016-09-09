@@ -279,14 +279,13 @@ public class ClientGUI extends javax.swing.JFrame implements Observer {
 
         SwingUtilities.invokeLater(() -> {
             if (arg instanceof ClientList) {
-                System.out.println("Got new ClientList:");
                 ClientList list = (ClientList) arg;
                 clients.setText(arg.toString());
                 
             } else if (arg instanceof Message) {
                 chatArea.append(((Message) arg).toString() + "\n");
             } else {
-                chatArea.append((String)arg);
+                chatArea.append((String)arg + "\n");
             }
         });
 

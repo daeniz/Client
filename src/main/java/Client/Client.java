@@ -28,12 +28,7 @@ public class Client implements Observer {
     public static void main(String[] args) {
         client = new Client();
         input = new Scanner(System.in);
-        System.out.println("Enter 1. for comandline, and 2. for GUI");
-//        int selection = input.nextInt();
-//        if(selection==2){
-//            ClientGUI.main(args);
-//            
-//        }
+        //System.out.println("Enter 1. for comandline, and 2. for GUI");
         String host;
         int port;
         if (args.length == 2) {
