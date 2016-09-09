@@ -53,7 +53,7 @@ public class ClientController {
     }
 
     public void sendMessage(String msg) {
-        if(msg.equals("LOGOUT")){
+        if(msg.equals("LOGOUT:")){
             logout();
             return;
         }

@@ -64,7 +64,6 @@ public class Interpreter extends Observable implements Runnable {
     }
 
     public void setLoggedOut() {
-        notifier("Logged out, close client!");
 
         loggedOut.set(true);
     }
