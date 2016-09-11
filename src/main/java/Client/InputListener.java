@@ -25,16 +25,16 @@ public class InputListener extends Observable implements Runnable{
     private final AtomicBoolean loggedOut;
     private final Socket socket;
     private Scanner s;
-    Observer o;
-    Interpreter i;
+    private Observer o;
+    private Interpreter i;
     public InputListener(Observer o, Socket socket){
         this.socket = socket;
         loggedOut = new AtomicBoolean();
         loggedOut.set(false);
         i=new Interpreter(socket, o);
         this.o=o;
-        //System.out.println("ClassName" + o.getClass().getName());
-        this.addObserver(o);
+        //System.out.println(o.getClass().getName());
+        
         try {
             s = new Scanner(socket.getInputStream());
         } catch (IOException ex) {
@@ -44,6 +44,9 @@ public class InputListener extends Observable implements Runnable{
 
     @Override
     public void run() {
+        this.addObserver(o);
+        
+        //System.out.println(o.getClass().getName());
         while (!loggedOut.get()) {   //while we are not logged out..
             String cmd = "";
             try {
@@ -51,11 +54,13 @@ public class InputListener extends Observable implements Runnable{
             } catch (NoSuchElementException ex) {
                 loggedOut.set(true);
             }
-            i.executeCommand(cmd);
-            if (o.getClass().getName().equals("dummyClient")){
+            //System.out.println(o.getClass().getName());
+            if (o.getClass().getName().equals("ServerTestSuite.DummyObserver")){  
             setChanged();
             notifyObservers(cmd);
             }
+            i.executeCommand(cmd);
+            
         }
     }
     

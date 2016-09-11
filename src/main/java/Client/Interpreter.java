@@ -28,12 +28,14 @@ public class Interpreter extends Observable {
 //    private Scanner s;
     private AtomicBoolean loggedOut;
     private List<String> clientList;
+    Observer obs;
 
     public Interpreter(Socket socket, Observer obs) {
 //        this.socket = socket;
 //        loggedOut = new AtomicBoolean();
 //        loggedOut.set(false);
         clientList = new CopyOnWriteArrayList<>();
+        this.obs=obs;
         this.addObserver(obs);
 //        try {
 //            s = new Scanner(socket.getInputStream());
