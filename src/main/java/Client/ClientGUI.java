@@ -15,6 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
+import org.apache.commons.lang.StringUtils;
 
 /**
  *
@@ -266,6 +267,10 @@ public class ClientGUI extends javax.swing.JFrame implements Observer {
 
     private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendButtonActionPerformed
         // TODO add your handling code here:
+        if (cc == null) {
+            chatArea.append("Connect and login before you chat!\n");
+            return;
+        }
         List<String> list;
         list = clientsList.getSelectedValuesList();
         String messageToSend = "";
@@ -291,7 +296,7 @@ public class ClientGUI extends javax.swing.JFrame implements Observer {
 
     private void loginButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButActionPerformed
         // TODO add your handling code here:
-        
+
         cc.login(username.getText());
         login.dispose();
     }//GEN-LAST:event_loginButActionPerformed
@@ -318,7 +323,8 @@ public class ClientGUI extends javax.swing.JFrame implements Observer {
         // TODO add your handling code here:
         cc.logout();
         String[] str = new String[0];
-       clientsList.setListData(str);
+        clientsList.setListData(str);
+        cc = null;
     }//GEN-LAST:event_logoutActionPerformed
 
     private void messageKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_messageKeyPressed
@@ -344,16 +350,29 @@ public class ClientGUI extends javax.swing.JFrame implements Observer {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        host = hostName.getText();        
+        host = hostName.getText();
         String tempString = portField.getText();
-        port = Integer.parseInt(tempString);
-        cc = new ClientController(client,host, port);
-        cc.runClient();
+        if (StringUtils.isNumeric(tempString)) {
+            port = Integer.parseInt(tempString);
+            try {
+                cc = new ClientController(client, host, port);
+                cc.runClient();
+            } catch (IOException ex) {
+                chatArea.append("Connection failed, check your parameters\n");
+            }
+        } else {
+            chatArea.append("Portnumber MUST be a number!\n");
+        }
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        if (cc!=null)cc.login(userName.getText());
+        if (cc != null) {
+            cc.login(userName.getText());
+        } else {
+            chatArea.append("Connect before logging in please!");
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
@@ -390,11 +409,9 @@ public class ClientGUI extends javax.swing.JFrame implements Observer {
                 client.setVisible(true);
             }
         });
-      
 
 //        cc = new ClientController(client,host, port);
 //        cc.runClient();
-
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
