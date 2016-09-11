@@ -255,6 +255,7 @@ public class ClientGUI extends javax.swing.JFrame implements Observer {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
@@ -352,11 +353,12 @@ public class ClientGUI extends javax.swing.JFrame implements Observer {
         // TODO add your handling code here:
         host = hostName.getText();
         String tempString = portField.getText();
-        if (StringUtils.isNumeric(tempString)) {
+        if (StringUtils.isNumeric(tempString)&&!tempString.equals("")) {
             port = Integer.parseInt(tempString);
             try {
                 cc = new ClientController(client, host, port);
                 cc.runClient();
+                chatArea.append("Connection established, now enter User Name\n");
             } catch (IOException ex) {
                 chatArea.append("Connection failed, check your parameters\n");
             }
