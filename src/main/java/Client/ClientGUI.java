@@ -322,10 +322,14 @@ public class ClientGUI extends javax.swing.JFrame implements Observer {
 
     private void logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutActionPerformed
         // TODO add your handling code here:
-        cc.logout();
-        String[] str = new String[0];
-        clientsList.setListData(str);
-        cc = null;
+        if (cc != null) {
+            cc.logout();
+            String[] str = new String[0];
+            clientsList.setListData(str);
+            cc = null;
+        } else {
+            chatArea.append("You are not logged in!");
+        }
     }//GEN-LAST:event_logoutActionPerformed
 
     private void messageKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_messageKeyPressed
@@ -353,7 +357,7 @@ public class ClientGUI extends javax.swing.JFrame implements Observer {
         // TODO add your handling code here:
         host = hostName.getText();
         String tempString = portField.getText();
-        if (StringUtils.isNumeric(tempString)&&!tempString.equals("")) {
+        if (StringUtils.isNumeric(tempString) && !tempString.equals("")) {
             port = Integer.parseInt(tempString);
             try {
                 cc = new ClientController(client, host, port);
