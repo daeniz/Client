@@ -25,33 +25,33 @@ public class Client implements Observer {
     private static ClientController cc;
     private static Client client;
 
-    public static void main(String[] args) {
-        client = new Client();
-        input = new Scanner(System.in);
-        
-        System.out.println("Enter 1. for commandline, and 2. for GUI");
-        String select = input.nextLine();
-       if(select.equals("2")){
-            ClientGUI.main(args);
-            return;
-        }
-        String host;
-        int port;
-        if (args.length == 2) {
-            host = args[0];
-            port = Integer.parseInt(args[1]);
-        } else {
-            return;
-        }
-        cc = new ClientController(client, host, port);
-        cc.runClient();
-        System.out.println("Type username to Log in");
-        cc.login(input.nextLine());
-        while (clientRunning) {
-            cc.sendMessage(input.nextLine());
-        }
-
-    }
+//    public static void main(String[] args) {
+//        client = new Client();
+//        input = new Scanner(System.in);
+//        
+//        System.out.println("Enter 1. for commandline, and 2. for GUI");
+//        String select = input.nextLine();
+//       if(select.equals("2")){
+//            ClientGUI.main(args);
+//            return;
+//        }
+//        String host;
+//        int port;
+//        if (args.length == 2) {
+//            host = args[0];
+//            port = Integer.parseInt(args[1]);
+//        } else {
+//            return;
+//        }
+//        cc = new ClientController(client, host, port);
+//        cc.runClient();
+//        System.out.println("Type username to Log in");
+//        cc.login(input.nextLine());
+//        while (clientRunning) {
+//            cc.sendMessage(input.nextLine());
+//        }
+//
+//    }
 
     @Override
     public void update(Observable o, Object arg) {
