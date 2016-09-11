@@ -27,6 +27,7 @@ public class ClientController {
     Interpreter i;
     Socket socket;
     List<String> clientList;
+    private InputListener input;
 
     public ClientController(Observer obs, String host, int port) throws IOException {
         
@@ -35,6 +36,7 @@ public class ClientController {
             i = new Interpreter(socket, obs);
             s = new Scanner(socket.getInputStream());
             pw = new PrintWriter(socket.getOutputStream(), true);
+            input = new InputListener(obs,socket);
 
             o = new Output(pw);
         } catch (IOException ex) {
@@ -44,7 +46,7 @@ public class ClientController {
 
     public void runClient() {
 
-        Thread it = new Thread(i);
+        Thread it = new Thread(input);
         it.start();
 
     }
@@ -64,7 +66,7 @@ public class ClientController {
 
     public void logout() {
         o.logout();
-        i.setLoggedOut();
+        input.setLoggedOut();
         try {
             socket.close();
         } catch (IOException ex) {

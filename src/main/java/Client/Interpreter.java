@@ -22,50 +22,50 @@ import java.util.logging.Logger;
  *
  * @author Daniel
  */
-public class Interpreter extends Observable implements Runnable {
+public class Interpreter extends Observable {
 
-    private Socket socket;
-    private Scanner s;
+//    private Socket socket;
+//    private Scanner s;
     private AtomicBoolean loggedOut;
     private List<String> clientList;
 
     public Interpreter(Socket socket, Observer obs) {
-        this.socket = socket;
-        loggedOut = new AtomicBoolean();
-        loggedOut.set(false);
+//        this.socket = socket;
+//        loggedOut = new AtomicBoolean();
+//        loggedOut.set(false);
         clientList = new CopyOnWriteArrayList<>();
         this.addObserver(obs);
-        try {
-            s = new Scanner(socket.getInputStream());
-        } catch (IOException ex) {
-            Logger.getLogger(Interpreter.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        try {
+//            s = new Scanner(socket.getInputStream());
+//        } catch (IOException ex) {
+//            Logger.getLogger(Interpreter.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     }
 
-    @Override
-    public void run() {
-        while (!loggedOut.get()) {   //while we are not logged out..
-            String cmd = "";
-            try {
-                cmd = s.nextLine();
-            } catch (NoSuchElementException ex) {
-                notifier("Your connection is closed!");
-                loggedOut.set(true);
-            }
+    public void executeCommand(String cmd) {
+//        while (!loggedOut.get()) {   //while we are not logged out..
+//            String cmd = "";
+//            try {
+//                cmd = s.nextLine();
+//            } catch (NoSuchElementException ex) {
+//                notifier("Your connection is closed!");
+//                loggedOut.set(true);
+//            }
             if (cmd.split(":")[0].equals("MSGRES")) {
                 postMSG(cmd.split(":"));
             }
             if (cmd.split(":")[0].equals("CLIENTLIST")) {
                 getClients(cmd.split(":"));
             }
-        }
-        notifier("Logged out, close client!");
+        
+//        System.out.println("TESTSTASEGAFS");
+//        notifier("Logged out, close client!");
     }
 
-    public void setLoggedOut() {
-
-        loggedOut.set(true);
-    }
+//    public void setLoggedOut() {
+//
+//        loggedOut.set(true);
+//    }
 
     public void postMSG(String[] command) {
         Message msg = new Message(command[2], command[1]);
@@ -86,6 +86,7 @@ public class Interpreter extends Observable implements Runnable {
     }
 
     private void notifier(String msg) {
+        //System.out.println("II notidy");
         this.setChanged();
         notifyObservers(msg);
     }
