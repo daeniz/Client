@@ -24,22 +24,24 @@
                             <mainClass>Client.ClientGUI</mainClass>
                         </manifest>
                     </archive>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
                 </configuration>
             </plugin>
                  
-          <plugin>
-              <groupId>org.codehaus.mojo</groupId>
-              <artifactId>exec-maven-plugin</artifactId>
-              <version>1.5.0</version>
-              <executions>
-                <execution>
-                  <id>server</id>
-                  <configuration>
-                    <mainClass>Client.Client</mainClass>
-                    <commandlineArgs>localhost 8888</commandlineArgs>
-                  </configuration>
-                </execution>
-              </executions>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.5.0</version>
+                <executions>
+                    <execution>
+                        <id>server</id>
+                        <configuration>
+                            <mainClass>Client.ClientGUI</mainClass>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
            
         </plugins>
