@@ -15,7 +15,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
-import org.apache.commons.lang.StringUtils;
 
 /**
  *
@@ -357,7 +356,6 @@ public class ClientGUI extends javax.swing.JFrame implements Observer {
         // TODO add your handling code here:
         host = hostName.getText();
         String tempString = portField.getText();
-        if (StringUtils.isNumeric(tempString) && !tempString.equals("")) {
             port = Integer.parseInt(tempString);
             try {
                 cc = new ClientController(client, host, port);
@@ -366,9 +364,7 @@ public class ClientGUI extends javax.swing.JFrame implements Observer {
             } catch (IOException ex) {
                 chatArea.append("Connection failed, check your parameters\n");
             }
-        } else {
-            chatArea.append("Portnumber MUST be a number!\n");
-        }
+       
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
