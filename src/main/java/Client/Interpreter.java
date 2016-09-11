@@ -59,7 +59,6 @@ public class Interpreter extends Observable implements Runnable {
                 getClients(cmd.split(":"));
             }
         }
-        System.out.println("TESTSTASEGAFS");
         notifier("Logged out, close client!");
     }
 
